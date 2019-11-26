@@ -16,6 +16,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
     //klidi gia api
+    //  
     String CITY = "serres";
     String API = "2e5293a7a1ec02512b976aaceed21885";
 
