@@ -15,8 +15,8 @@ import java.util.Locale;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-    String CITY = "dhaka,bd";
-    String API = "8118ed6ee68db2debfaaa5a44c832918";
+    String CITY = "serres";
+    String API = "2e5293a7a1ec02512b976aaceed21885";
 
     TextView addressTxt, updated_atTxt, statusTxt, tempTxt, temp_minTxt, temp_maxTxt, sunriseTxt,
             sunsetTxt, windTxt, pressureTxt, humidityTxt;
