@@ -1,8 +1,10 @@
 package com.example.weatherforecastapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.androdocs.httprequest.HttpRequest;
@@ -24,12 +26,32 @@ public class MainActivity extends AppCompatActivity {
     TextView addressTxt, updated_atTxt, statusTxt, tempTxt, temp_minTxt, temp_maxTxt, sunriseTxt,
             sunsetTxt, windTxt, pressureTxt, humidityTxt;
 
+
+    public Button but1;
+
+
+    public void init() {
+        but1 = (Button)findViewById(R.id.but1);
+        but1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startUp = new Intent(MainActivity.this,HistorySelectionScreen.class);
+
+                startActivity(startUp);
+            }
+        });
+
+    }
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+            init();
             addressTxt = findViewById(R.id.address);
             updated_atTxt = findViewById(R.id.updated_at);
             statusTxt = findViewById(R.id.status);
