@@ -1,17 +1,18 @@
 package com.example.weatherforecastapp;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.androdocs.httprequest.HttpRequest;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
