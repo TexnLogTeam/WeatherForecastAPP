@@ -18,6 +18,8 @@ import java.util.Locale;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
+
+    DatabseHelper myDb;
     //klidi gia api
     //  
     String CITY = "serres";
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public Button but1;
+
 
 
     public void init() {
@@ -65,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
             humidityTxt = findViewById(R.id.humidity);
 
             new weatherTask().execute();
+
+            myDb=new DatabseHelper(this);
         }
         class weatherTask extends AsyncTask<String, Void, String> {
             @Override
