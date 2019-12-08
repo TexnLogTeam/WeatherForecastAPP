@@ -33,14 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     public Button but1;
 
-    TextView editDate;
-    TextView editTemp;
-    TextView editTempmin;
-    TextView editTempmax;
-    TextView editWind;
-    TextView editPreassure;
-    TextView editHumidity;
-    Button btnViewHistory;
 
 
 
@@ -87,20 +79,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, DatabseHelper.class));
 
 
-            //Times sta editText
-            editDate = (EditText) findViewById(R.id.updated_at);
-            editTemp = (EditText)findViewById(R.id.temp);
-            editTempmin = (EditText)findViewById(R.id.temp_min);
-            editTempmax = (EditText)findViewById(R.id.temp_max);
-            editWind = (EditText)findViewById(R.id.wind);
-            editPreassure = (EditText)findViewById(R.id.pressure);
-            editHumidity = (EditText)findViewById(R.id.humidity);
-            btnViewHistory =  (Button)findViewById(R.id.but1);
 
 
             //Kalesma tis synartisis addRecord me orismata ta editText
-            myDb.addRecord(editDate.toString(),editTemp.toString(),editTempmin.toString(),editTempmax.toString(),
-                    editWind.toString(),editPreassure.toString(),editHumidity.toString());
+            myDb.addRecord(updated_atTxt.getText().toString(),tempTxt.getText().toString(),temp_minTxt.getText().toString(),
+                    temp_maxTxt.getText().toString(),windTxt.getText().toString(),pressureTxt.getText().toString(),humidityTxt.getText().toString());
 
 
 
