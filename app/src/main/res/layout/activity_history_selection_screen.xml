@@ -7,44 +7,6 @@
     android:background="@drawable/bg_gradient">
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="335dp"
-        android:layout_height="110dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginRight="26dp"
-        android:layout_marginBottom="541dp"
-        android:text="         Please select the date                                   you want to see"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:visibility="visible" />
-
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="327dp"
-        android:layout_height="313dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="27dp"
-        android:layout_marginLeft="27dp"
-        android:layout_marginTop="350dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="27dp"
-        android:layout_marginBottom="40dp"
-        android:visibility="visible" />
-
     <ProgressBar android:id="@+id/loader" android:layout_width="wrap_content"
         android:layout_height="wrap_content" android:layout_centerInParent="true"
         android:visibility="gone"/>
