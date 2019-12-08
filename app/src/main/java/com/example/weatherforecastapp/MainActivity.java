@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    DatabaseHelper myDb;
 
 
 
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             humidityTxt = findViewById(R.id.humidity);
 
             new weatherTask().execute();
+            myDb=new DatabaseHelper(this);
         }
         class weatherTask extends AsyncTask<String, Void, String> {
             @Override
