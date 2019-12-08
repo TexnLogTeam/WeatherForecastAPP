@@ -1,6 +1,7 @@
 package com.example.weatherforecastapp;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -15,26 +16,27 @@ public class DatabseHelper extends SQLiteOpenHelper
     public static final String COL3="temp";
     public static final String COL4="tempmin";
     public static final String COL5="tempmax";
-    public static final String COL8="wind";
-    public static final String COL9="preassure";
-    public static final String COL10="humidity";
+    public static final String COL6="wind";
+    public static final String COL7="preassure";
+    public static final String COL8="humidity";
 
 
 
-   /* public DatabseHelper(@Nullable context context) {
+
+    public DatabseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
-        SQLiteDatabase db=this.getWritableDatabase();
-    } */
 
-    public DatabseHelper(MainActivity mainActivity) {
-        super(mainActivity, DATABASE_NAME, null, 1);
-        SQLiteDatabase db=this.getWritableDatabase();
     }
+
+
+    MainActivity ma = new MainActivity();
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String qry="create table WeatherStats (id integer primary key autoincrement not null, [date] text, [temp] text, [tempmin] text,[tempmax] text,[wind] text, [preassure] text,[humidity] text)";
         db.execSQL(qry);
+
 
     }
 
@@ -51,17 +53,17 @@ public class DatabseHelper extends SQLiteOpenHelper
         SQLiteDatabase db=this.getWritableDatabase();
 
         ContentValues cv=new ContentValues();
-        cv.put("DATE",date);
-        cv.put("TEMP",temp);
-        cv.put("TEMPMIN",tempmin);
-        cv.put("TEMPMAX",tempmax);
-        cv.put("WIND",wind);
-        cv.put("PREASSURE",preassure);
-        cv.put("HUMIDITY",humidity);
+        cv.put(COL2,date);
+        cv.put(COL3,temp);
+        cv.put(COL4,tempmin);
+        cv.put(COL5,tempmax);
+        cv.put(COL6,wind);
+        cv.put(COL7,preassure);
+        cv.put(COL8,humidity);
 
         long res= db.insert("WeatherStats",null,cv);
 
-        if (res==1)
+        if (res==-1)
             return "Failed to insert current weather data on history. Please try again later. ";
         else
             return "Data succesfully inserted on history !";

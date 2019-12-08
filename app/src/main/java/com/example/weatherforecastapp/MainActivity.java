@@ -1,10 +1,12 @@
 package com.example.weatherforecastapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.androdocs.httprequest.HttpRequest;
@@ -31,6 +33,15 @@ public class MainActivity extends AppCompatActivity {
 
     public Button but1;
 
+    EditText editDate;
+    EditText editTemp;
+    EditText editTempmin;
+    EditText editTempmax;
+    EditText editWind;
+    EditText editPreassure;
+    EditText editHumidity;
+    Button btnViewHistory;
+
 
 
     public void init() {
@@ -49,10 +60,13 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
             init();
             addressTxt = findViewById(R.id.address);
@@ -71,6 +85,23 @@ public class MainActivity extends AppCompatActivity {
 
             myDb=new DatabseHelper(this);
             startActivity(new Intent(this, DatabseHelper.class));
+
+
+            //Times sta editText
+            editDate = (EditText) findViewById(R.id.updated_at);
+            editTemp = (EditText)findViewById(R.id.temp);
+            editTempmin = (EditText)findViewById(R.id.temp_min);
+            editTempmax = (EditText)findViewById(R.id.temp_max);
+            editWind = (EditText)findViewById(R.id.wind);
+            editPreassure = (EditText)findViewById(R.id.pressure);
+            editHumidity = (EditText)findViewById(R.id.humidity);
+            btnViewHistory =  (Button)findViewById(R.id.but1);
+
+
+            //Kalesma tis synartisis addRecord me orismata ta editText
+            myDb.addRecord(editDate.toString(),editTemp.toString(),editTempmin.toString(),editTempmax.toString(),
+                    editWind.toString(),editPreassure.toString(),editHumidity.toString());
+
 
 
         }
@@ -131,16 +162,10 @@ public class MainActivity extends AppCompatActivity {
                     humidityTxt.setText(humidity);
 
 
-                    //Gets instance of date/time
-                    SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
-                    Date datetime = new Date(System.currentTimeMillis());
-                    System.out.println(formatter.format(datetime));
 
 
-                    //Kalesma Synartisis gia apothikeusi stin Db
 
 
-                    myDb.addRecord(datetime.toString(),temp,tempMin,tempMax,windSpeed,pressure,humidity);
 
                     /* Views populated, Hiding the loader, Showing the main design */
 
