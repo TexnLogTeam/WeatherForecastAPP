@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
             new weatherTask().execute();
 
             myDb=new DatabseHelper(this);
+            startActivity(new Intent(this, DatabseHelper.class));
+
+
         }
         class weatherTask extends AsyncTask<String, Void, String> {
             @Override
@@ -127,7 +130,20 @@ public class MainActivity extends AppCompatActivity {
                     pressureTxt.setText(pressure);
                     humidityTxt.setText(humidity);
 
+
+                    //Gets instance of date/time
+                    SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+                    Date datetime = new Date(System.currentTimeMillis());
+                    System.out.println(formatter.format(datetime));
+
+
+                    //Kalesma Synartisis gia apothikeusi stin Db
+
+
+                    myDb.addRecord(datetime.toString(),temp,tempMin,tempMax,windSpeed,pressure,humidity);
+
                     /* Views populated, Hiding the loader, Showing the main design */
+
                     findViewById(R.id.loader).setVisibility(View.GONE);
                     findViewById(R.id.mainContainer).setVisibility(View.VISIBLE);
 

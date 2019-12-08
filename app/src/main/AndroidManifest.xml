@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".HistorySelectionScreen"></activity>
+        <activity android:name=".DatabseHelper"></activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
