@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.Nullable;
+
 public class DatabseHelper extends SQLiteOpenHelper
 {
     public static final String DATABASE_NAME= "Weather.db";
@@ -19,8 +21,13 @@ public class DatabseHelper extends SQLiteOpenHelper
 
 
 
-    public DatabseHelper(MainActivity context ) {
+   /* public DatabseHelper(@Nullable context context) {
         super(context, DATABASE_NAME, null, 1);
+        SQLiteDatabase db=this.getWritableDatabase();
+    } */
+
+    public DatabseHelper(MainActivity mainActivity) {
+        super(mainActivity, DATABASE_NAME, null, 1);
         SQLiteDatabase db=this.getWritableDatabase();
     }
 
