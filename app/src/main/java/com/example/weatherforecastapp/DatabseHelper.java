@@ -2,6 +2,7 @@ package com.example.weatherforecastapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -67,5 +68,16 @@ public class DatabseHelper extends SQLiteOpenHelper
             return "Failed to insert current weather data on history. Please try again later. ";
         else
             return "Data succesfully inserted on history !";
+    }
+
+
+    public Cursor getAllHistory() {
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from WeatherStats",null);
+
+        return res;
+
+
+
     }
 }

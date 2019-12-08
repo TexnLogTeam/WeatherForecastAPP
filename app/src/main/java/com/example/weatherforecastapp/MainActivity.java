@@ -2,12 +2,15 @@ package com.example.weatherforecastapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.androdocs.httprequest.HttpRequest;
 import org.json.JSONException;
@@ -31,14 +34,14 @@ public class MainActivity extends AppCompatActivity {
             sunsetTxt, windTxt, pressureTxt, humidityTxt;
 
 
-    public Button but1;
+    public Button Button1;
 
 
 
 
     public void init() {
-        but1 = (Button)findViewById(R.id.but1);
-        but1.setOnClickListener(new View.OnClickListener() {
+        Button1 = (Button)findViewById(R.id.but1);
+        Button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startUp = new Intent(MainActivity.this,HistorySelectionScreen.class);
@@ -46,6 +49,51 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(startUp);
             }
         });
+
+    }
+
+    public void viewAllHistory() {
+        Button1.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                      Cursor res = myDb.getAllHistory();
+                      if (res.getCount() == 0 ) {
+                          // Show message
+
+                          showMessage("Error","No weather history data found ");
+                          return ;
+                      }
+
+                      StringBuffer buffer = new StringBuffer();
+                      while (res.moveToNext()) {
+                          buffer.append("ID :" + res.getString(0)+"\n");
+                          buffer.append("Date :" + res.getString(1)+"\n");
+                          buffer.append("Temperature :" + res.getString(2)+"\n");
+                          buffer.append("Minimum Temperature :" + res.getString(3)+"\n");
+                          buffer.append("Maximum Temperature :" + res.getString(4)+"\n");
+                          buffer.append("Wind :" + res.getString(5)+"\n");
+                          buffer.append("Preassure :" + res.getString(6)+"\n");
+                          buffer.append("Humidity :" + res.getString(7)+"\n\n");
+
+                      }
+
+                      //Show all history data
+                        showMessage("History Data", buffer.toString());
+                    }
+                }
+        );
+    }
+
+    public void showMessage(String title,String Message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(Message);
+        builder.show();
+
+
 
     }
 
@@ -72,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
             windTxt = findViewById(R.id.wind);
             pressureTxt = findViewById(R.id.pressure);
             humidityTxt = findViewById(R.id.humidity);
+
+            viewAllHistory();
 
             new weatherTask().execute();
 
