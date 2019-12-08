@@ -33,13 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
     public Button but1;
 
-    EditText editDate;
-    EditText editTemp;
-    EditText editTempmin;
-    EditText editTempmax;
-    EditText editWind;
-    EditText editPreassure;
-    EditText editHumidity;
+    TextView editDate;
+    TextView editTemp;
+    TextView editTempmin;
+    TextView editTempmax;
+    TextView editWind;
+    TextView editPreassure;
+    TextView editHumidity;
     Button btnViewHistory;
 
 
