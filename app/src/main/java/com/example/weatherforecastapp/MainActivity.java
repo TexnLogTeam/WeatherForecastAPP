@@ -81,9 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            //Kalesma tis synartisis addRecord me orismata ta editText
-            myDb.addRecord(updated_atTxt.getText().toString(),tempTxt.getText().toString(),temp_minTxt.getText().toString(),
-                    temp_maxTxt.getText().toString(),windTxt.getText().toString(),pressureTxt.getText().toString(),humidityTxt.getText().toString());
+
 
 
 
@@ -145,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
                     humidityTxt.setText(humidity);
 
 
+                    //Kalesma tis synartisis addRecord me orismata ta editText
+                    myDb.addRecord(updated_atTxt.getText().toString(),tempTxt.getText().toString(),temp_minTxt.getText().toString(),
+                            temp_maxTxt.getText().toString(),windTxt.getText().toString(),pressureTxt.getText().toString(),humidityTxt.getText().toString());
 
 
 
