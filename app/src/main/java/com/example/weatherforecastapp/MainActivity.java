@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*public void viewAllHistory() {
+    public void viewAllHistory() {
         Button1.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    } */
+    }
 
 
 
@@ -125,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
             pressureTxt = findViewById(R.id.pressure);
             humidityTxt = findViewById(R.id.humidity);
 
-            //viewAllHistory();
+            viewAllHistory();
 
             new weatherTask().execute();
 
             myDb=new DatabseHelper(this);
 
-            startActivity(new Intent(this, DatabseHelper.class));
+           // startActivity(new Intent(this, DatabseHelper.class));
 
 
 
