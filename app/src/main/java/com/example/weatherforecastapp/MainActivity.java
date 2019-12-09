@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -35,12 +36,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     public Button Button1;
+    public Button btnAdd;
 
 
 
 
     public void init() {
         Button1 = (Button)findViewById(R.id.but1);
+        btnAdd = (Button)findViewById(R.id.btnAdd);
+
         Button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void viewAllHistory() {
+    /*public void viewAllHistory() {
         Button1.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -95,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    }
+    } */
 
 
 
@@ -121,11 +125,12 @@ public class MainActivity extends AppCompatActivity {
             pressureTxt = findViewById(R.id.pressure);
             humidityTxt = findViewById(R.id.humidity);
 
-            viewAllHistory();
+            //viewAllHistory();
 
             new weatherTask().execute();
 
             myDb=new DatabseHelper(this);
+
             startActivity(new Intent(this, DatabseHelper.class));
 
 
@@ -135,7 +140,39 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         }
+
+    public void AddData() {
+
+        btnAdd.setOnClickListener(
+
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        boolean isInserted = myDb.insertData(updated_atTxt.getText().toString(),
+                                tempTxt.getText().toString(),
+                                temp_minTxt.getText().toString(),
+                                temp_maxTxt.getText().toString(),
+                                windTxt.getText().toString(),
+                                pressureTxt.getText().toString(),
+                                humidityTxt.getText().toString());
+                        if (isInserted = true) {
+                            Toast.makeText(MainActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Data NOT Inserted", Toast.LENGTH_LONG).show();
+
+                        }
+
+
+                    }
+                }
+        );
+    }
+
+
+
         class weatherTask extends AsyncTask<String, Void, String> {
             @Override
             protected void onPreExecute() {
@@ -193,13 +230,6 @@ public class MainActivity extends AppCompatActivity {
                     humidityTxt.setText(humidity);
 
 
-                    //Kalesma tis synartisis addRecord me orismata ta editText
-                    myDb.addRecord(updated_atTxt.getText().toString(),tempTxt.getText().toString(),temp_minTxt.getText().toString(),
-                            temp_maxTxt.getText().toString(),windTxt.getText().toString(),pressureTxt.getText().toString(),humidityTxt.getText().toString());
-
-
-
-
 
                     /* Views populated, Hiding the loader, Showing the main design */
 
@@ -211,6 +241,22 @@ public class MainActivity extends AppCompatActivity {
                     findViewById(R.id.loader).setVisibility(View.GONE);
                     findViewById(R.id.errorText).setVisibility(View.VISIBLE);
                 }
+
+
+                myDb.insertData(updated_atTxt.getText().toString(),
+                        tempTxt.getText().toString(),
+                        temp_minTxt.getText().toString(),
+                        temp_maxTxt.getText().toString(),
+                        windTxt.getText().toString(),
+                        pressureTxt.getText().toString(),
+                        humidityTxt.getText().toString());
+
+
+
+
+
+
+
             }
         }
     }

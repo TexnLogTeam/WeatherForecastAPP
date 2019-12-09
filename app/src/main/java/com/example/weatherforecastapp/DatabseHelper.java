@@ -49,7 +49,7 @@ public class DatabseHelper extends SQLiteOpenHelper
 
     }
 
-    public String addRecord(String date,String temp,String tempmin,String tempmax,String wind,String preassure,String humidity){
+    public boolean insertData(String date,String temp,String tempmin,String tempmax,String wind,String preassure,String humidity){
 
         SQLiteDatabase db=this.getWritableDatabase();
 
@@ -65,9 +65,9 @@ public class DatabseHelper extends SQLiteOpenHelper
         long res= db.insert("WeatherStats",null,cv);
 
         if (res==-1)
-            return "Failed to insert current weather data on history. Please try again later. ";
+            return false;
         else
-            return "Data succesfully inserted on history !";
+            return true;
     }
 
 
