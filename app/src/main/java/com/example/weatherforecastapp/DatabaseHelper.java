@@ -1,6 +1,7 @@
 package com.example.weatherforecastapp;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -34,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
-        SQLiteDatabase db=this.getWritableDatabase();
+        //SQLiteDatabase db=this.getWritableDatabase();
     }
 
     @Override
@@ -48,6 +49,33 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS"+TABLE_NAME);
         onCreate(db);
+
+    }
+
+    public boolean insertData(String date,String temp,String tempmin,String tempmax,String wind,String preassure,String humidity)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL2,date);
+        contentValues.put(COL3,temp);
+        contentValues.put(COL4,tempmin);
+        contentValues.put(COL5,tempmax);
+        contentValues.put(COL8,wind);
+        contentValues.put(COL9,preassure);
+        contentValues.put(COL10,humidity);
+
+        long result = db.insert(TABLE_NAME,null,contentValues);
+
+        if(result==-1) {
+            return false;
+        }
+        else {
+            return true;
+        }
+
+
+
+
 
     }
 }

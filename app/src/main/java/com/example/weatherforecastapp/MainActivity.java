@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     //klidi gia api
@@ -28,23 +29,24 @@ public class MainActivity extends AppCompatActivity {
 
 
     public Button but1;
+    public Button btnAdd;
 
 
     public void init() {
-        but1 = (Button)findViewById(R.id.but1);
+        btnAdd = (Button) findViewById(R.id.btnAdd);
+        but1 = (Button) findViewById(R.id.but1);
         but1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startUp = new Intent(MainActivity.this,HistorySelectionScreen.class);
+                Intent startUp = new Intent(MainActivity.this, HistorySelectionScreen.class);
 
                 startActivity(startUp);
             }
         });
 
     }
+
     DatabaseHelper myDb;
-
-
 
 
     @Override
@@ -52,87 +54,169 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-            init();
-            addressTxt = findViewById(R.id.address);
-            updated_atTxt = findViewById(R.id.updated_at);
-            statusTxt = findViewById(R.id.status);
-            tempTxt = findViewById(R.id.temp);
-            temp_minTxt = findViewById(R.id.temp_min);
-            temp_maxTxt = findViewById(R.id.temp_max);
-            sunriseTxt = findViewById(R.id.sunrise);
-            sunsetTxt = findViewById(R.id.sunset);
-            windTxt = findViewById(R.id.wind);
-            pressureTxt = findViewById(R.id.pressure);
-            humidityTxt = findViewById(R.id.humidity);
+        init();
+        addressTxt = findViewById(R.id.address);
+        updated_atTxt = findViewById(R.id.updated_at);
+        statusTxt = findViewById(R.id.status);
+        tempTxt = findViewById(R.id.temp);
+        temp_minTxt = findViewById(R.id.temp_min);
+        temp_maxTxt = findViewById(R.id.temp_max);
+        sunriseTxt = findViewById(R.id.sunrise);
+        sunsetTxt = findViewById(R.id.sunset);
+        windTxt = findViewById(R.id.wind);
+        pressureTxt = findViewById(R.id.pressure);
+        humidityTxt = findViewById(R.id.humidity);
 
-            new weatherTask().execute();
-            myDb=new DatabaseHelper(this);
-        }
-        class weatherTask extends AsyncTask<String, Void, String> {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
+        new weatherTask().execute();
+        myDb = new DatabaseHelper(this);
 
-                /* Showing the ProgressBar, Making the main design GONE */
-                findViewById(R.id.loader).setVisibility(View.VISIBLE);
-                findViewById(R.id.mainContainer).setVisibility(View.GONE);
-                findViewById(R.id.errorText).setVisibility(View.GONE);
-            }
-
-            protected String doInBackground(String... args) {
-                String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
-                return response;
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
+        AddData();
 
 
-                try {
-                    JSONObject jsonObj = new JSONObject(result);
-                    JSONObject main = jsonObj.getJSONObject("main");
-                    JSONObject sys = jsonObj.getJSONObject("sys");
-                    JSONObject wind = jsonObj.getJSONObject("wind");
-                    JSONObject weather = jsonObj.getJSONArray("weather").getJSONObject(0);
+    }
 
-                    Long updatedAt = jsonObj.getLong("dt");
-                    String updatedAtText = "Updated at: " + new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(new Date(updatedAt * 1000));
-                    String temp = main.getString("temp") + "°C";
-                    String tempMin = "Min Temp: " + main.getString("temp_min") + "°C";
-                    String tempMax = "Max Temp: " + main.getString("temp_max") + "°C";
-                    String pressure = main.getString("pressure");
-                    String humidity = main.getString("humidity");
+    public void AddData() {
 
-                    Long sunrise = sys.getLong("sunrise");
-                    Long sunset = sys.getLong("sunset");
-                    String windSpeed = wind.getString("speed");
-                    String weatherDescription = weather.getString("description");
+        btnAdd.setOnClickListener(
 
-                    String address = jsonObj.getString("name") + ", " + sys.getString("country");
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
+                        boolean isInserted = myDb.insertData(updated_atTxt.getText().toString(),
+                                tempTxt.getText().toString(),
+                                temp_minTxt.getText().toString(),
+                                temp_maxTxt.getText().toString(),
+                                windTxt.getText().toString(),
+                                pressureTxt.getText().toString(),
+                                humidityTxt.getText().toString());
+                        if (isInserted = true) {
+                            Toast.makeText(MainActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Data NOT Inserted", Toast.LENGTH_LONG).show();
 
-                    /* Populating extracted data into our views */
-                    addressTxt.setText(address);
-                    updated_atTxt.setText(updatedAtText);
-                    statusTxt.setText(weatherDescription.toUpperCase());
-                    tempTxt.setText(temp);
-                    temp_minTxt.setText(tempMin);
-                    temp_maxTxt.setText(tempMax);
-                    sunriseTxt.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunrise * 1000)));
-                    sunsetTxt.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunset * 1000)));
-                    windTxt.setText(windSpeed);
-                    pressureTxt.setText(pressure);
-                    humidityTxt.setText(humidity);
-
-                    /* Views populated, Hiding the loader, Showing the main design */
-                    findViewById(R.id.loader).setVisibility(View.GONE);
-                    findViewById(R.id.mainContainer).setVisibility(View.VISIBLE);
+                        }
 
 
-                } catch (JSONException e) {
-                    findViewById(R.id.loader).setVisibility(View.GONE);
-                    findViewById(R.id.errorText).setVisibility(View.VISIBLE);
+                    }
                 }
+        );
+    }
+
+    class weatherTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            /* Showing the ProgressBar, Making the main design GONE */
+            findViewById(R.id.loader).setVisibility(View.VISIBLE);
+            findViewById(R.id.mainContainer).setVisibility(View.GONE);
+            findViewById(R.id.errorText).setVisibility(View.GONE);
+        }
+
+        protected String doInBackground(String... args) {
+            String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
+            return response;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+
+            try {
+                JSONObject jsonObj = new JSONObject(result);
+                JSONObject main = jsonObj.getJSONObject("main");
+                JSONObject sys = jsonObj.getJSONObject("sys");
+                JSONObject wind = jsonObj.getJSONObject("wind");
+                JSONObject weather = jsonObj.getJSONArray("weather").getJSONObject(0);
+
+                Long updatedAt = jsonObj.getLong("dt");
+                String updatedAtText = "Updated at: " + new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(new Date(updatedAt * 1000));
+                String temp = main.getString("temp") + "°C";
+                String tempMin = "Min Temp: " + main.getString("temp_min") + "°C";
+                String tempMax = "Max Temp: " + main.getString("temp_max") + "°C";
+                String pressure = main.getString("pressure");
+                String humidity = main.getString("humidity");
+
+                Long sunrise = sys.getLong("sunrise");
+                Long sunset = sys.getLong("sunset");
+                String windSpeed = wind.getString("speed");
+                String weatherDescription = weather.getString("description");
+
+                String address = jsonObj.getString("name") + ", " + sys.getString("country");
+
+
+                /* Populating extracted data into our views */
+                addressTxt.setText(address);
+                updated_atTxt.setText(updatedAtText);
+                statusTxt.setText(weatherDescription.toUpperCase());
+                tempTxt.setText(temp);
+                temp_minTxt.setText(tempMin);
+                temp_maxTxt.setText(tempMax);
+                sunriseTxt.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunrise * 1000)));
+                sunsetTxt.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunset * 1000)));
+                windTxt.setText(windSpeed);
+                pressureTxt.setText(pressure);
+                humidityTxt.setText(humidity);
+
+                /* Views populated, Hiding the loader, Showing the main design */
+                findViewById(R.id.loader).setVisibility(View.GONE);
+                findViewById(R.id.mainContainer).setVisibility(View.VISIBLE);
+
+
+            } catch (JSONException e) {
+                findViewById(R.id.loader).setVisibility(View.GONE);
+                findViewById(R.id.errorText).setVisibility(View.VISIBLE);
             }
+
+                /*public void AddData(){
+
+                    btnAdd.setOnClickListener(
+
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                   boolean isInserted = myDb.insertData(updated_atTxt.getText().toString(),
+                                            tempTxt.getText().toString(),
+                                            temp_minTxt.getText().toString(),
+                                            temp_maxTxt.getText().toString(),
+                                            windTxt.getText().toString(),
+                                            pressureTxt.getText().toString(),
+                                            humidityTxt.getText().toString());
+                                   if(isInserted=true)
+                                   {
+                                       Toast.makeText(MainActivity.this,"Data Inserted",Toast.LENGTH_LONG ).show();
+                                   }
+                                   else
+                                   {
+                                       Toast.makeText(MainActivity.this,"Data NOT Inserted",Toast.LENGTH_LONG ).show();
+
+                                   }
+
+
+
+                                }
+                            }
+                    );
+                }*/
+
+            myDb.insertData(updated_atTxt.getText().toString(),
+                    tempTxt.getText().toString(),
+                    temp_minTxt.getText().toString(),
+                    temp_maxTxt.getText().toString(),
+                    windTxt.getText().toString(),
+                    pressureTxt.getText().toString(),
+                    humidityTxt.getText().toString());
+                /*if(isInserted=true)
+                {
+                    Toast.makeText(MainActivity.this,"Data Inserted",Toast.LENGTH_LONG ).show();
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this,"Data NOT Inserted",Toast.LENGTH_LONG ).show();
+            }*/
         }
     }
+
+}
