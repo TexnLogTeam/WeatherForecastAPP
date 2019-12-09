@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     public void viewAllHistory() {
         Button1.setOnClickListener(
                 new View.OnClickListener() {
