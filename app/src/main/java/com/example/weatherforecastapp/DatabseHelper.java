@@ -13,6 +13,7 @@ public class DatabseHelper extends SQLiteOpenHelper
     public static final String DATABASE_NAME= "Weather.db";
    // public static final String TABLE_NAME= "WeatherStats";
     public static final String COL1="id";
+    //public static final String COL2="city";
     public static final String COL2="date";
     public static final String COL3="temp";
     public static final String COL4="tempmin";
@@ -49,7 +50,7 @@ public class DatabseHelper extends SQLiteOpenHelper
 
     }
 
-    public boolean insertData(String date,String temp,String tempmin,String tempmax,String wind,String preassure,String humidity){
+    public boolean insertData( String date,String temp,String tempmin,String tempmax,String wind,String preassure,String humidity){
 
         SQLiteDatabase db=this.getWritableDatabase();
 

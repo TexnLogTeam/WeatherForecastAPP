@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     DatabseHelper myDb;
     //klidi gia api
     //  
-    String CITY = "serres";
+    String CITY = "Serres";
     String API = "2e5293a7a1ec02512b976aaceed21885";
 
     TextView addressTxt, updated_atTxt, statusTxt, tempTxt, temp_minTxt, temp_maxTxt, sunriseTxt,
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+   // SearchView simpleSearchView = (SearchView) findViewById(R.id.searchCity);
+    //CharSequence query = simpleSearchView.getQuery();
+
 
 
     public void viewAllHistory() {
@@ -74,13 +78,14 @@ public class MainActivity extends AppCompatActivity {
                       StringBuffer buffer = new StringBuffer();
                       while (res.moveToNext()) {
                           buffer.append("ID :" + res.getString(0)+"\n");
-                          buffer.append("Date :" + res.getString(1)+"\n");
-                          buffer.append("Temperature :" + res.getString(2)+"\n");
-                          buffer.append("Minimum Temperature :" + res.getString(3)+"\n");
-                          buffer.append("Maximum Temperature :" + res.getString(4)+"\n");
-                          buffer.append("Wind :" + res.getString(5)+"\n");
-                          buffer.append("Preassure :" + res.getString(6)+"\n");
-                          buffer.append("Humidity :" + res.getString(7)+"\n\n");
+                         // buffer.append("City :" + res.getString(1)+"\n");
+                          buffer.append("Date :" + res.getString(2)+"\n");
+                          buffer.append("Temperature :" + res.getString(3)+"\n");
+                          buffer.append("Minimum Temperature :" + res.getString(4)+"\n");
+                          buffer.append("Maximum Temperature :" + res.getString(5)+"\n");
+                          buffer.append("Wind :" + res.getString(6)+"\n");
+                          buffer.append("Preassure :" + res.getString(7)+"\n");
+                          buffer.append("Humidity :" + res.getString(8)+"\n\n");
 
                       }
 
@@ -136,6 +141,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+            AddData();
+
+
 
 
 
@@ -159,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                                 windTxt.getText().toString(),
                                 pressureTxt.getText().toString(),
                                 humidityTxt.getText().toString());
-                        if (isInserted = true) {
+                        if (isInserted == true) {
                             Toast.makeText(MainActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(MainActivity.this, "Data NOT Inserted", Toast.LENGTH_LONG).show();
@@ -185,7 +193,9 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.errorText).setVisibility(View.GONE);
             }
 
+
             protected String doInBackground(String... args) {
+              //  CITY= query.toString();
                 String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
                 return response;
             }
@@ -232,6 +242,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
                     /* Views populated, Hiding the loader, Showing the main design */
 
                     findViewById(R.id.loader).setVisibility(View.GONE);
@@ -244,7 +256,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-                myDb.insertData(updated_atTxt.getText().toString(),
+                myDb.insertData(
+                        updated_atTxt.getText().toString(),
                         tempTxt.getText().toString(),
                         temp_minTxt.getText().toString(),
                         temp_maxTxt.getText().toString(),
