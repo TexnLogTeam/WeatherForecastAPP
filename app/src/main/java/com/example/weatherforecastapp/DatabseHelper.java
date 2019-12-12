@@ -13,14 +13,14 @@ public class DatabseHelper extends SQLiteOpenHelper
     public static final String DATABASE_NAME= "Weather.db";
    // public static final String TABLE_NAME= "WeatherStats";
     public static final String COL1="id";
-    //public static final String COL2="city";
-    public static final String COL2="date";
-    public static final String COL3="temp";
-    public static final String COL4="tempmin";
-    public static final String COL5="tempmax";
-    public static final String COL6="wind";
-    public static final String COL7="preassure";
-    public static final String COL8="humidity";
+    public static final String COL2="city";
+    public static final String COL3="date";
+    public static final String COL4="temp";
+    public static final String COL5="tempmin";
+    public static final String COL6="tempmax";
+    public static final String COL7="wind";
+    public static final String COL8="preassure";
+    public static final String COL9="humidity";
 
 
 
@@ -50,18 +50,19 @@ public class DatabseHelper extends SQLiteOpenHelper
 
     }
 
-    public boolean insertData( String date,String temp,String tempmin,String tempmax,String wind,String preassure,String humidity){
+    public boolean insertData(String city,String date,String temp,String tempmin,String tempmax,String wind,String preassure,String humidity){
 
         SQLiteDatabase db=this.getWritableDatabase();
 
         ContentValues cv=new ContentValues();
-        cv.put(COL2,date);
-        cv.put(COL3,temp);
-        cv.put(COL4,tempmin);
-        cv.put(COL5,tempmax);
-        cv.put(COL6,wind);
-        cv.put(COL7,preassure);
-        cv.put(COL8,humidity);
+        cv.put(COL2,city);
+        cv.put(COL3,date);
+        cv.put(COL4,temp);
+        cv.put(COL5,tempmin);
+        cv.put(COL6,tempmax);
+        cv.put(COL7,wind);
+        cv.put(COL8,preassure);
+        cv.put(COL9,humidity);
 
         long res= db.insert("WeatherStats",null,cv);
 

@@ -11,10 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HistorySelectionScreen"></activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".DatabseHelper"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".HistorySelectionScreen"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTheme">
             <intent-filter>

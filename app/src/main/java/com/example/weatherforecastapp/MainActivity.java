@@ -27,10 +27,14 @@ import android.os.Bundle;
 public class MainActivity extends AppCompatActivity {
 
     DatabseHelper myDb;
+    HistorySelectionScreen hss;
+
     //klidi gia api
     //  
-    String CITY = "Serres";
+    String CITY = hss.cityContainer.getText().toString();
     String API = "2e5293a7a1ec02512b976aaceed21885";
+
+
 
     TextView addressTxt, updated_atTxt, statusTxt, tempTxt, temp_minTxt, temp_maxTxt, sunriseTxt,
             sunsetTxt, windTxt, pressureTxt, humidityTxt;
@@ -56,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-   // SearchView simpleSearchView = (SearchView) findViewById(R.id.searchCity);
-    //CharSequence query = simpleSearchView.getQuery();
+
+
 
 
 
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                       StringBuffer buffer = new StringBuffer();
                       while (res.moveToNext()) {
                           buffer.append("ID :" + res.getString(0)+"\n");
-                         // buffer.append("City :" + res.getString(1)+"\n");
+                          buffer.append("City :" + res.getString(1)+"\n");
                           buffer.append("Date :" + res.getString(2)+"\n");
                           buffer.append("Temperature :" + res.getString(3)+"\n");
                           buffer.append("Minimum Temperature :" + res.getString(4)+"\n");
@@ -160,7 +164,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        boolean isInserted = myDb.insertData(updated_atTxt.getText().toString(),
+                        boolean isInserted = myDb.insertData(addressTxt.getText().toString(),
+                                updated_atTxt.getText().toString(),
                                 tempTxt.getText().toString(),
                                 temp_minTxt.getText().toString(),
                                 temp_maxTxt.getText().toString(),
@@ -195,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             protected String doInBackground(String... args) {
-              //  CITY= query.toString();
+
                 String response = HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&units=metric&appid=" + API);
                 return response;
             }
@@ -256,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-                myDb.insertData(
+                myDb.insertData(addressTxt.getText().toString(),
                         updated_atTxt.getText().toString(),
                         tempTxt.getText().toString(),
                         temp_minTxt.getText().toString(),

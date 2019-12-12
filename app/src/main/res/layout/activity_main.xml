@@ -189,14 +189,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <SearchView
-            android:id="@+id/searchCity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="85dp"
-            android:visibility="visible" />
-
 
     </RelativeLayout>
 
